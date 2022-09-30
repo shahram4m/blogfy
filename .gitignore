@@ -1,2 +1,11 @@
 .idea/
+
+#virtual env
 venv/
+
+#database
+db.sqlite3
+
+#migrations
+blog/migrations
+
