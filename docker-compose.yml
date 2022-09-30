@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  blogfy_postgresql:
+    container_name: blogfy_postgresql_container
+    image: postgres:12
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+       - blogfy_postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - blogfy_network
+    restart: always
+
+networks:
+  blogfy_network:
+    external: true
+
+volumes:
+    blogfy_postgresql:
+      external: true
