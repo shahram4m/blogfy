@@ -1,6 +1,25 @@
 version: '3.5'
 
 services:
+  blogfy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/blogfy
+      - blogfy_static_volume:/blogfy/static
+      - blogfy_files_volume:/blogfy/file
+    restart: always
+    expose:
+      - "8000"
+#    ports:
+#     - "8000:8000"
+    networks:
+      - blogfy_network
+      - nginx_network
+    depends_on:
+      - blogfy_postgresql
+
   blogfy_postgresql:
     container_name: blogfy_postgresql_container
     image: postgres:12
@@ -19,7 +38,13 @@ services:
 networks:
   blogfy_network:
     external: true
+  nginx_network:
+    external: true
 
 volumes:
     blogfy_postgresql:
+      external: true
+    blogfy_static_volume:
+      external: true
+    blogfy_files_volume:
       external: true
